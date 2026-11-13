@@ -43,11 +43,12 @@ jobs:
           cuda-toolkit: "13.0"
 
       # numpy is kept below 2.5 because numba-cuda still uses np.row_stack.
+      # cuda-core is held below 1.3 until the simulator resolves a driver lookup it needs (pantheongpu/pantheonsim#626).
       - name: Install dependencies
         run: |
           python3 -m venv "$RUNNER_TEMP/venv"
           "$RUNNER_TEMP/venv/bin/python" -m pip install --upgrade pip
-          "$RUNNER_TEMP/venv/bin/python" -m pip install numba-cuda "numpy<2.5" tqdm pytest
+          "$RUNNER_TEMP/venv/bin/python" -m pip install numba-cuda "numpy<2.5" "cuda-core<1.3" tqdm pytest
 
       - name: Check that the simulated GPU is visible
         env:
